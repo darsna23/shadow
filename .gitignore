@@ -1,0 +1,9 @@
+node_modules/
+target/
+*.jar
+*.war
+*.zip
+*.tgz
+.env
+.idea/
+.vscode/s

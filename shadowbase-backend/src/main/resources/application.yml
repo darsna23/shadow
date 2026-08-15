@@ -1,0 +1,35 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: shadowbase
+
+  datasource:
+    # metadata DB for ShadowBase itself (not the shadow clones, which are ephemeral Testcontainers)
+    url: jdbc:mysql://localhost:3306/shadowbase_meta
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: shadowbase-replayer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+shadowbase:
+  cdc:
+    topic: dbserver1.public.orders
+
+# Testcontainers needs a running Docker daemon on this machine
+testcontainers:
+  reuse:
+    enable: true

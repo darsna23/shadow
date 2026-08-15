@@ -1,0 +1,52 @@
+services:
+  postgres-prod:
+    image: postgres:16-alpine
+    container_name: shadowbase-postgres-prod
+    ports: ["5432:5432"]
+    environment:
+      POSTGRES_DB: prod_db
+      POSTGRES_USER: prod
+      POSTGRES_PASSWORD: prod
+    command: ["postgres", "-c", "wal_level=logical"]
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    container_name: shadowbase-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    container_name: shadowbase-kafka
+    depends_on: [zookeeper]
+    ports: ["9092:9092"]
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  debezium-connect:
+    image: debezium/connect:2.7.3.Final
+    container_name: shadowbase-debezium
+    depends_on: [kafka, postgres-prod]
+    ports: ["8083:8083"]
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      GROUP_ID: shadowbase-connect
+      CONFIG_STORAGE_TOPIC: connect_configs
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      STATUS_STORAGE_TOPIC: connect_statuses
+
+  mysql-meta:
+    image: mysql:8.4
+    container_name: shadowbase-mysql-meta
+    ports: ["3306:3306"]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shadowbase_meta
