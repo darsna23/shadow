@@ -5,11 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Translates a Debezium change-event payload (op: c=create, u=update, d=delete)
- * into an equivalent SQL statement to replay against the shadow clone.
- * This is intentionally simple — enough to demonstrate the replay pipeline.
- */
+
 public final class CdcEventTranslator {
 
     private CdcEventTranslator() {}
