@@ -24,7 +24,6 @@ public class EnvironmentController {
         return Map.of("environmentId", envId, "jdbcUrl", environmentService.jdbcUrlFor(envId));
     }
 
-    /** Applies a migration script (e.g. ALTER TABLE) directly against the shadow clone. */
     @PostMapping("/{envId}/migrate")
     public Map<String, String> migrate(@PathVariable String envId, @RequestBody Map<String, String> body) {
         environmentService.applySql(envId, body.get("sql"));
