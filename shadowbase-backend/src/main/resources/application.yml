@@ -6,7 +6,7 @@ spring:
     name: shadowbase
 
   datasource:
-    # metadata DB for ShadowBase itself (not the shadow clones, which are ephemeral Testcontainers)
+    
     url: jdbc:mysql://localhost:3306/shadowbase_meta
     username: root
     password: root
