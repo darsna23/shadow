@@ -9,13 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-/**
- * Listens to the Debezium change-data-capture topic (production DB events,
- * mirrored via Kafka) and replays each insert/update/delete against the
- * shadow database clone in real time. Any SQL exception raised here means
- * the migration script broke something the live schema didn't — surfaced
- * to the dashboard instead of production.
- */
+
 @Component
 public class CdcReplayConsumer {
 
