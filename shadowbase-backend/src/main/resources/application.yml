@@ -29,7 +29,7 @@ shadowbase:
   cdc:
     topic: dbserver1.public.orders
 
-# Testcontainers needs a running Docker daemon on this machine
+
 testcontainers:
   reuse:
     enable: true

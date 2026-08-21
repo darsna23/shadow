@@ -16,7 +16,7 @@ public class EnvironmentController {
         this.environmentService = environmentService;
     }
 
-    /** Spins up a fresh, disposable Postgres clone and (optionally) seeds it with a base schema. */
+    
     @PostMapping
     public Map<String, String> create(@RequestBody(required = false) Map<String, String> body) {
         String baseSchema = body == null ? null : body.get("baseSchemaSql");
