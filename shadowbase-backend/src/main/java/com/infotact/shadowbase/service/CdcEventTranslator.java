@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Iterator;
 import java.util.Map;
 
+// create event translator
 
 public final class CdcEventTranslator {
 
