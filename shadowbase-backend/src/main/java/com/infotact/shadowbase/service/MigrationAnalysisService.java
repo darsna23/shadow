@@ -9,11 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Parses a migration script's AST (via JSqlParser) and warns the developer
- * if it drops a column — before it ever runs against shadowed traffic.
- * This is the "bonus" static-analysis layer described in the project plan.
- */
+
 @Service
 public class MigrationAnalysisService {
 
