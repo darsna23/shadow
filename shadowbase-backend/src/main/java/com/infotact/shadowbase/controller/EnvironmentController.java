@@ -16,7 +16,7 @@ public class EnvironmentController {
         this.environmentService = environmentService;
     }
 
-    
+    //post mapping 
     @PostMapping
     public Map<String, String> create(@RequestBody(required = false) Map<String, String> body) {
         String baseSchema = body == null ? null : body.get("baseSchemaSql");
