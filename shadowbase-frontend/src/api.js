@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// In dev, Vite proxies /api -> http://localhost:8080 (see vite.config.js)
+// Application Interface
 const api = axios.create({ baseURL: '/api' })
 
 export const getMetricsSummary = () => api.get('/metrics/summary').then(r => r.data)
