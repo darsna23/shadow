@@ -6,7 +6,7 @@ import {
 } from 'chart.js'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip)
-
+// update charts
 export default function LiveChart({ points }) {
   const data = {
     labels: points.map(p => p.label),
